@@ -73,6 +73,61 @@ Client-server chat applications are versatile tools that facilitate real-time co
 
 Client-server chat applications are foundational to real-time communication over networks. They incorporate principles of socket programming, communication protocols, and security mechanisms to provide a seamless user experience. Understanding the basics of client-server chat applications is essential for developers involved in networked application development, as they form the backbone of various collaborative communication systems. As technology evolves, chat applications continue to adapt, incorporating new features and technologies to enhance user interaction and connectivity.
 
+## Program for Server:
+~~~
+import socket
+def server_program():
+    host = '127.0.0.1' # or socket.gethostname()
+    port = 8000
+    server_socket = socket.socket()
+    server_socket.bind((host, port))
+    server_socket.listen(1)
+    print(f"Server listening on {host}:{port}")
+    conn, address = server_socket.accept()
+    print("Connection from:", address)
+    while True:
+        data = conn.recv(1024).decode()
+        if not data:
+            break
+        print("from connected user:", data)
+        message = input(" -> ")
+        conn.send(message.encode())
+    conn.close()
+if __name__ == '__main__':
+    server_program()
+~~~
+
+## Program for client:
+~~~
+import socket
+
+def client_program():
+    host = '127.0.0.1'
+    port = 8000
+    client_socket = socket.socket()
+    client_socket.connect((host, port))
+    try:
+        while True:
+            message = input(" -> ")
+            client_socket.send(message.encode())
+            data = client_socket.recv(1024).decode()
+            print('Received from server:', data)
+    except KeyboardInterrupt:
+        print("\nDisconnected from server.")
+    finally:
+        client_socket.close()
+
+if __name__ == '__main__':
+    client_program()
+~~~
+## Output:
+#   At Server:
+<img width="872" height="226" alt="image" src="https://github.com/user-attachments/assets/3f0d5376-177d-4d49-905a-44527f3c2251" />
+
+#   At Client:
+<img width="871" height="224" alt="image" src="https://github.com/user-attachments/assets/2f81f7ee-db72-4c3a-a699-e08e9271c652" />
+
+
 
 ## Result:
 
